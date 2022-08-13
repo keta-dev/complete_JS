@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /*
 /////////////////////////////////////////////////
@@ -123,8 +123,8 @@ createBooking('LH123', undefined, 1000);
 ///////////////////////////////////////
 // The call and apply Methods
 const lufthansa = {
-  airline: 'Lufthansa',
-  iataCode: 'LH',
+  airline: "Lufthansa",
+  iataCode: "LH",
   bookings: [],
   // book: function() {}
   book(flightNum, name) {
@@ -134,11 +134,11 @@ const lufthansa = {
     this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
   },
 };
-lufthansa.book(239, 'Miriam Chiketa');
-lufthansa.book(635, 'John Smith');
+lufthansa.book(239, "Miriam Chiketa");
+lufthansa.book(635, "John Smith");
 const eurowings = {
-  airline: 'Eurowings',
-  iataCode: 'EW',
+  airline: "Eurowings",
+  iataCode: "EW",
   bookings: [],
 };
 const book = lufthansa.book;
@@ -150,13 +150,13 @@ const book = lufthansa.book;
 // book.call(lufthansa, 239, 'Mary Cooper');
 // console.log(lufthansa);
 const swiss = {
-  airline: 'Swiss Air Lines',
-  iataCode: 'LX',
+  airline: "Swiss Air Lines",
+  iataCode: "LX",
   bookings: [],
 };
-book.call(swiss, 583, 'Mary Cooper');
+book.call(swiss, 583, "Mary Cooper");
 // Apply method
-const flightData = [583, 'George Cooper'];
+const flightData = [583, "George Cooper"];
 book.apply(swiss, flightData);
 // console.log(swiss);
 book.call(swiss, ...flightData);
@@ -328,10 +328,23 @@ And now explain to YOURSELF (or someone around you) WHY this worked! Take all th
 GOOD LUCK 😀
 */
 
-(function () {
-  const header = document.querySelector('h1');
-  header.style.color = 'red';
-  document.querySelector('body').addEventListener('click', () => {
-    header.style.color = 'blue';
-  });
-})();
+// (function () {
+//   const header = document.querySelector("h1");
+//   header.style.color = "red";
+//   document.querySelector("body").addEventListener("click", () => {
+//     header.style.color = "blue";
+//   });
+// })();
+
+function find_max(nums) {
+  let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers
+  for (let num of nums) {
+    if (num > max_num) {
+      // (Fill in the missing line here)
+      max_num = num;
+    }
+  }
+  return max_num;
+}
+const val = find_max([2, -3, 4, -6]);
+console.log(val);
