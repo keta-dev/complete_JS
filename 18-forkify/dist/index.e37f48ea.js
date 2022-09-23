@@ -552,7 +552,7 @@ const loadSpinner = function(parentEl) {
     const markUp = `
     <div class="spinner">
       <svg>
-        <use href="src/img/icons.svg#icon-loader"></use>
+        <use href="${(0, _iconsSvgDefault.default)}#icon-loader"></use>
       </svg>
     </div>
   `;
@@ -563,9 +563,12 @@ const loadSpinner = function(parentEl) {
 const showRecipe = async function() {
     // loading recipe
     try {
+        const id = window.location.hash.slice(1);
+        // guard clause
+        if (!id) return;
         // load spinner
         loadSpinner(recipeContainer);
-        const res = await fetch("https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886");
+        const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
         const data = await res.json();
         if (!res.ok) throw new Error(`${data.message} (${res.status})`);
         let { recipe  } = data.data;
@@ -675,7 +678,10 @@ const showRecipe = async function() {
         alert(err);
     }
 };
-showRecipe();
+[
+    "hashchange",
+    "load"
+].forEach((e)=>window.addEventListener(e, showRecipe));
 
 },{"url:../img/icons.svg":"loVOp","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ"}],"loVOp":[function(require,module,exports) {
 module.exports = require("./helpers/bundle-url").getBundleURL("hWUTQ") + "icons.dfd7a6db.svg" + "?" + Date.now();

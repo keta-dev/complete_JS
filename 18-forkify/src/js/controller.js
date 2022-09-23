@@ -21,7 +21,7 @@ const loadSpinner = function (parentEl) {
   const markUp = `
     <div class="spinner">
       <svg>
-        <use href="src/img/icons.svg#icon-loader"></use>
+        <use href="${icons}#icon-loader"></use>
       </svg>
     </div>
   `;
@@ -32,11 +32,16 @@ const loadSpinner = function (parentEl) {
 const showRecipe = async function () {
   // loading recipe
   try {
+    const id = window.location.hash.slice(1);
+
+    // guard clause
+    if(!id) return;
+
     // load spinner
     loadSpinner(recipeContainer);
-
+    
     const res = await fetch(
-      "https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886"
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
     );
     const data = await res.json();
 
@@ -156,4 +161,5 @@ const showRecipe = async function () {
     alert(err);
   }
 };
-showRecipe();
+
+["hashchange", "load"].forEach(e => window.addEventListener(e, showRecipe));
