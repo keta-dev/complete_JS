@@ -1,0 +1,85 @@
+@font-face {
+  font-family: 'system-ui';
+  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+  font-style: normal;
+  font-weight: 300;
+}
+
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "system-ui";
+}
+
+header {
+  background-color: #1f2937;
+  padding-bottom: 5rem;
+}
+
+a {
+  font-size: 18px;
+  color: #e5e7eb;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  padding: 1rem 8rem;
+  justify-content: space-between;
+}
+
+ul {
+  display: flex;
+  gap: 2rem;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+.logo-text {
+  color: #f9faf8;
+}
+
+/* Hero Styling */
+.hero {
+  display: flex;
+  gap: 9rem;
+  margin-top: 3rem;
+  padding: 1rem 8rem;
+}
+.hero-text-box {
+  display: flex;
+  flex-direction: column;
+}
+h1 {
+  color: #f9faf8;
+  font-size: 48px;
+  font-weight: bold;
+}
+.hero-img-box {
+  width: 600px;
+  height: 150px;
+  background-color: #87898d;
+}
+.text {
+  color: #e5e7eb;
+  margin-bottom: 1rem;
+}
+.hero-btn {
+  font-size: 18px;
+  padding: 0.3rem 2rem 0.3rem 2rem;
+  color: #f9faf8;
+  border: none;
+  border-radius: 0.3rem;
+  background-color: #3882f6;
+}
+.image {
+  color: #e5e7eb;
+  padding: 4rem 0 1rem 0;
+  text-align: center;
+}
