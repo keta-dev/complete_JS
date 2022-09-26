@@ -6,23 +6,24 @@ export const state = {
   recipe: {},
 }
 
-export const loadRecipe = async function(id) {
+export const loadRecipe = async function (id) {
   try {
-    const res = await fetch(`${API_URL}/${id}`);
+    const data = await getJSON(`${API_URL}/${id}`);
     
     const { recipe } = data.data;
+    console.log(recipe);
+
     state.recipe = {
       id: recipe.id,
       title: recipe.title,
       publisher: recipe.publisher,
       sourceUrl: recipe.source_Url,
       servings: recipe.servings,
-      image: recipe.image_url,
+      img: recipe.image_url,
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients,
     };
-    console.log('recipe', state.recipe);
   } catch (err) {
-    console.error('model', err);
+    throw err;
   }
 }

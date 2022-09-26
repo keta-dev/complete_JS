@@ -556,15 +556,15 @@ const controlRecipes = async function() {
         // 2) render the recipe
         (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
     } catch (err) {
-        alert(err);
+        (0, _recipeViewJsDefault.default).renderError();
     }
 };
-[
-    "hashchange",
-    "load"
-].forEach((e)=>window.addEventListener(e, controlRecipes));
+const init = function() {
+    (0, _recipeViewJsDefault.default).addHandlerRenderRecipe(controlRecipes);
+};
+init();
 
-},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"Y4A21","./views/recipeView.js":"l60JC","regenerator-runtime/runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","regenerator-runtime":"dXNgZ"}],"49tUX":[function(require,module,exports) {
+},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"Y4A21","./views/recipeView.js":"l60JC","regenerator-runtime/runtime":"dXNgZ","regenerator-runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("../modules/web.clear-immediate");
 require("../modules/web.set-immediate");
@@ -1697,21 +1697,21 @@ const state = {
 };
 const loadRecipe = async function(id) {
     try {
-        const res = await fetch(`${(0, _config.API_URL)}/${id}`);
+        const data = await (0, _helpers.getJSON)(`${(0, _config.API_URL)}/${id}`);
         const { recipe  } = data.data;
+        console.log(recipe);
         state.recipe = {
             id: recipe.id,
             title: recipe.title,
             publisher: recipe.publisher,
             sourceUrl: recipe.source_Url,
             servings: recipe.servings,
-            image: recipe.image_url,
+            img: recipe.image_url,
             cookingTime: recipe.cooking_time,
             ingredients: recipe.ingredients
         };
-        console.log("recipe", state.recipe);
     } catch (err) {
-        console.error("model", err);
+        throw err;
     }
 };
 
@@ -2347,7 +2347,7 @@ const getJSON = async function(url) {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","regenerator-runtime":"dXNgZ","./config":"k5Hzs"}],"l60JC":[function(require,module,exports) {
+},{"regenerator-runtime":"dXNgZ","./config":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l60JC":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // import icons from '../img/logo.png'; //parcel 1
@@ -2357,6 +2357,8 @@ var _fractional = require("fractional");
 class RecipeView {
     #parentElement = document.querySelector(".recipe");
     #data;
+    #errMessage = "We could not find the recipe. Please try another one.";
+    #message = "Recipe was successfully created.";
     render(data) {
         this.#data = data;
         const markup = this.#generateMarkUp();
@@ -2366,7 +2368,7 @@ class RecipeView {
      #clear() {
         this.#parentElement.innerHTML = "";
     }
-    loadSpinner = function() {
+    loadSpinner() {
         const markUp = `
       <div class="spinner">
         <svg>
@@ -2374,13 +2376,47 @@ class RecipeView {
         </svg>
       </div>
     `;
-        this.#parentElement.innerHTML = "";
+        this.#clear();
         this.#parentElement.insertAdjacentHTML("afterbegin", markUp);
-    };
+    }
+    addHandlerRenderRecipe(handler) {
+        [
+            "hashchange",
+            "load"
+        ].forEach((ev)=>window.addEventListener(ev, handler));
+    }
+    renderError(message = this.#errMessage) {
+        const markUp = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>
+    `;
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML("afterbegin", markUp);
+    }
+    renderSuccess(message = this.#message) {
+        const markUp = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>
+    `;
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML("afterbegin", markUp);
+    }
      #generateMarkUp() {
         return `
       <figure class="recipe__fig">
-        <img src=${this.#data.image} alt=${this.#data.title} class="recipe__img" />
+        <img src=${this.#data.img} alt=${this.#data.title} class="recipe__img" />
         <h1 class="recipe__title">
         <span>${this.#data.title}</span>
         </h1>
