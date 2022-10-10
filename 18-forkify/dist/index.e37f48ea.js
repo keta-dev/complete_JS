@@ -567,7 +567,8 @@ const controlSearchResults = async function() {
         // 2) Load search results
         await _modelJs.loadSearchRecipe(query);
         // 3) Render results
-        (0, _resultViewJsDefault.default).render(_modelJs.state.search.results);
+        // resultView.render(model.state.search.results);
+        (0, _resultViewJsDefault.default).render(_modelJs.searchPagination(3));
     } catch (err) {
         console.log(err);
     }
@@ -1704,6 +1705,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearchRecipe", ()=>loadSearchRecipe);
+parcelHelpers.export(exports, "searchPagination", ()=>searchPagination);
 var _regeneratorRuntime = require("regenerator-runtime");
 var _config = require("./config");
 var _helpers = require("./helpers");
@@ -1711,7 +1713,9 @@ const state = {
     recipe: {},
     search: {
         query: "",
-        results: []
+        results: [],
+        page: 1,
+        resultPerPage: (0, _config.RES_PER_PAGE)
     }
 };
 const loadRecipe = async function(id) {
@@ -1752,6 +1756,14 @@ const loadSearchRecipe = async function(query) {
     }
 };
 loadSearchRecipe("pizza");
+const searchPagination = function(page = state.search.page) {
+    state.search.page = page;
+    const start = (page - 1) * state.search.resultPerPage // 0
+    ;
+    const end = page * state.search.resultPerPage // 10
+    ;
+    return state.search.results.slice(start, end);
+};
 
 },{"regenerator-runtime":"dXNgZ","./config":"k5Hzs","./helpers":"hGI1E","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dXNgZ":[function(require,module,exports) {
 /**
@@ -2325,8 +2337,10 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "API_URL", ()=>API_URL);
 parcelHelpers.export(exports, "TIMEOUT", ()=>TIMEOUT);
+parcelHelpers.export(exports, "RES_PER_PAGE", ()=>RES_PER_PAGE);
 const API_URL = "https://forkify-api.herokuapp.com/api/v2/recipes/";
 const TIMEOUT = 10;
+const RES_PER_PAGE = 10;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
