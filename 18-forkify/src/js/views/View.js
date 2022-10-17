@@ -3,12 +3,15 @@ import icons from "url:../../img/icons.svg"; //parcel 2
 export default class View {
   _data;
 
-  render(data) {
+  render(data, render = true) {
     // if (!data) return this.renderError();
     if (!data || (Array.isArray(data) && data.length === 0)) return this.renderError();
 
     this._data = data;
     const markup = this._generateMarkUp();
+
+    if (!render) return markup; //guard clause
+
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
@@ -25,7 +28,7 @@ export default class View {
     
     newElements.forEach((newEl, i) => {
       const curEl = curElements[i];
-      console.log(curEl, newEl.isEqualNode(curEl));
+      // console.log(curEl, newEl.isEqualNode(curEl));
 
       // Updates changed TEXT
       if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== '') {
