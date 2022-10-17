@@ -17,7 +17,6 @@ export const loadRecipe = async function (id) {
     const data = await getJSON(`${API_URL}${id}`);
     
     const { recipe } = data.data;
-    // console.log(recipe);
 
     state.recipe = {
       id: recipe.id,
@@ -65,4 +64,13 @@ export const searchPagination = function(page = state.search.page) {
   const end = page * state.search.resultPerPage // 10
 
   return state.search.results.slice(start, end);
-}
+};
+
+export const updateServings = function(newServings) {
+  state.recipe.ingredients.forEach(ing => {
+    ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
+    // newQt = oldQt * newServings / oldServings // 2 * 8 / 4 = 4
+  });
+
+  state.recipe.servings = newServings;
+};
