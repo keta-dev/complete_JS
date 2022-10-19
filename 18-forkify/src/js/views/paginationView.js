@@ -57,6 +57,7 @@ class PaginationView extends View {
         </button>
       `;
     }
+    
     // Page 1, and there are NO other pages
     return "No other pages";
   }
